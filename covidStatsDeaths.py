@@ -17,7 +17,7 @@ def jload(obj):
     return loaded_json
     
 # A function that returns the JSON request respond
-def get_vacs_json():
+def get_covid_json():
 
     response = requests.get("https://covid-19-greece.herokuapp.com/deaths")
 
@@ -38,11 +38,11 @@ datesArray = []
 deathCases = []
 
 # Request JSON object and turn it into a Python dictionary
-vacs_json = get_vacs_json()
+covid_json = get_covid_json()
 
-formatted_json = jprint(vacs_json)
+formatted_json = jprint(covid_json)
 
-loaded_json = jload(vacs_json)
+loaded_json = jload(covid_json)
 
 # Iterate through dictionary and perform actions on the last day's data
 for key in loaded_json['cases']:

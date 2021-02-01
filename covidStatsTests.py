@@ -19,7 +19,7 @@ def jload(obj):
 # A function that returns the JSON request respond
 def get_covid_json():
 
-    response = requests.get("https://covid-19-greece.herokuapp.com/confirmed")
+    response = requests.get("https://covid-19-greece.herokuapp.com//total-tests")
 
     if (response.status_code == 200):
 
@@ -35,7 +35,7 @@ def get_covid_json():
 
 datesArray = []
 
-confirmedCases = []
+testCases = []
 
 # Request JSON object and turn it into a Python dictionary
 covid_json = get_covid_json()
@@ -45,10 +45,10 @@ formatted_json = jprint(covid_json)
 loaded_json = jload(covid_json)
 
 # Iterate through dictionary and perform actions on the last day's data
-for key in loaded_json['cases']:
+for key in loaded_json['total_tests']:
     
-    confirmedCases.append(key['confirmed'])
+    testCases.append(key['tests'])
 
     datesArray.append(key['date'])
 
-print ("Total confirmed COVID-19 cases in Greece:",confirmedCases[-1],",last updated on:",datesArray[-1])
+print ("Total Test COVID-19 cases in Greece:",testCases[-1],",last updated on:",datesArray[-1])
