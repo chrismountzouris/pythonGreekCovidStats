@@ -3,6 +3,10 @@ import requests
 
 import json
 
+import matplotlib.pyplot as plt
+
+import re
+
 # Initialize variables
 def jprint(obj):
 
@@ -31,6 +35,44 @@ def get_covid_json():
 
         return None
 
+def reduceDates(datesArray):
+
+    reducedDatesArray = []
+
+    for singleDay in datesArray:
+
+        match = re.findall(r"[\d]{4}-[\d]{1,2}-01", singleDay)
+
+        if (match):
+
+            reducedDatesArray.append(match[0])
+
+        else:
+
+            reducedDatesArray.append('x')
+
+    return reducedDatesArray
+
+def create_covid_plot(datesArray, confirmedCases):
+
+    plt.rcParams.update({'font.size': 8})
+
+    plt.figure(figsize=(7,7))
+
+    plt.plot(datesArray, confirmedCases)
+
+    plt.title('COVID-19 Total Cases | Greece')
+
+    plt.xlabel('Date')
+
+    plt.xticks(rotation=90)
+
+    plt.ylabel('Total cases')
+
+    plt.show()
+
+    return None
+
 # Initialize variables
 
 datesArray = []
@@ -52,3 +94,7 @@ for key in loaded_json['cases']:
     datesArray.append(key['date'])
 
 print ("Total confirmed COVID-19 cases in Greece:",confirmedCases[-1],",last updated on:",datesArray[-1])
+
+reducedDateArray = reduceDates(datesArray)
+
+create_covid_plot(datesArray, confirmedCases)
